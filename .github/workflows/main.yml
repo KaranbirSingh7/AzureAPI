@@ -5,12 +5,7 @@ env:
   container_registry_name: azdevops400dev.azurecr.io
   resource_group: 1-1feb5543-playground-sandbox
 
-on:
-  workflow_dispatch
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: [workflow_dispatch]
 
 jobs:
   build:
