@@ -1,4 +1,9 @@
-name: CI
+name: Push To ACR
+
+env: 
+  container_registry: azdevops400dev.azurecr.io
+  container_registry_name: azdevops400dev.azurecr.io
+  resource_group: 1-1feb5543-playground-sandbox
 
 on:
   push:
@@ -9,20 +14,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    
-    - uses: azure/login@v1
+    - name: Azure Container Registry Authentication
+      uses: azure/docker-login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        
-    - name: Azure WebApp
-      uses: Azure/webapps-deploy@v2
-      with:
-        app-name: azureapi92
+        login-server: ${{container_registry}}
+        username: ${{secrets.REGISTRY_USERNAME}}
+        password: ${{secrets.REGISTRY_USERNAME}}
