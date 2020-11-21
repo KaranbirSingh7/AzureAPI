@@ -1,0 +1,23 @@
+name: Push To ACR
+
+env: 
+  container_registry: azdevops400dev.azurecr.io
+  container_registry_name: azdevops400dev.azurecr.io
+  resource_group: 1-1feb5543-playground-sandbox
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Azure Container Registry Authentication
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{container_registry}}
+        username: ${{secrets.REGISTRY_USERNAME}}
+        password: ${{secrets.REGISTRY_USERNAME}}
